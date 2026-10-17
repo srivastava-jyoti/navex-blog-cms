@@ -1,0 +1,9 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ .Description | default site.Params.description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+{{ with resources.Get "scss/main.scss" }}
+  {{ $css := . | css.Sass (dict "transpiler" "libsass" "outputStyle" "compressed") | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{ end }}

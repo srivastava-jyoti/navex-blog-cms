@@ -1,0 +1,9 @@
+{{- /* Inline body image from Sanity. Params: src, alt, width, height, caption. */ -}}
+{{- $src := .Get "src" -}}
+{{- with $src -}}
+  <figure class="post-figure">
+    <img src="{{ $src }}?w=1200&amp;auto=format" alt="{{ $.Get "alt" }}" loading="lazy" decoding="async"
+      {{- with $.Get "width" }} width="{{ . }}"{{ end }}{{ with $.Get "height" }} height="{{ . }}"{{ end }}>
+    {{- with $.Get "caption" }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+{{- end -}}
