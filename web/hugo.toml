@@ -1,5 +1,5 @@
 baseURL = "https://example.netlify.app/" # overridden on Netlify via --baseURL / HUGO_BASEURL
-languageCode = "en-gb"
+locale = "en-gb"
 title = "Navex Blog"
 enableRobotsTXT = true
 summaryLength = 30

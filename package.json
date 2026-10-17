@@ -6,11 +6,12 @@
   "type": "module",
   "scripts": {
     "fetch": "tsx scripts/fetch-sanity.ts",
-    "dev": "npm run fetch && hugo server --source web",
-    "build": "npm run fetch && hugo --source web --minify",
+    "dev": "npm run fetch && node scripts/hugo.mjs server",
+    "build": "npm run fetch && node scripts/hugo.mjs --minify",
     "test": "tsx --test scripts/**/*.test.ts",
     "typecheck": "tsc --noEmit -p scripts",
-    "studio": "npm --prefix studio run dev"
+    "studio": "npm --prefix studio run dev",
+    "hugo": "node scripts/hugo.mjs"
   },
   "engines": {
     "node": ">=22.12"
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "22.20.5",
+    "sass-embedded": "1.105.2",
     "typescript": "7.0.2"
   }
 }
