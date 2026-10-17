@@ -16,12 +16,8 @@
       </div>
     {{- end }}
 
-    <div class="post-layout">
-      <aside class="post-layout__aside">
-        {{ partial "toc.html" . }}
-      </aside>
-      <div class="post-layout__content">
-        <div class="prose">{{ .Content }}</div>
+    <div class="post-body">
+      <div class="prose">{{ .Content }}</div>
 
         {{- if or $author $category }}
           <footer class="post-footer">
@@ -36,7 +32,6 @@
             {{- end }}
           </footer>
         {{- end }}
-      </div>
     </div>
   </article>
 {{ end }}

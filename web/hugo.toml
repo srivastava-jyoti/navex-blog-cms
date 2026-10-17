@@ -17,7 +17,3 @@ summaryLength = 30
 [markup.goldmark.renderer]
   unsafe = false # Content is Markdown generated from Portable Text; no raw HTML needed.
 
-[markup.tableOfContents]
-  startLevel = 2
-  endLevel = 4
-  ordered = false

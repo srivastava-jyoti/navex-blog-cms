@@ -55,7 +55,7 @@ web/       Hugo site: templates, Sass and JavaScript
 - Blog post page with title, publish date, hero image and content
 - Author and category details on each post, linking to their pages
 - Category and author listing pages (Hugo taxonomies)
-- Reading time, a table of contents, and a copy-link button
+- Reading time and a copy-link button
 - Responsive layout for mobile and desktop, styled with Sass
 - Semantic HTML and accessibility basics (alt text, heading order, keyboard focus)
 - Validation in Sanity, and pages still render when optional fields are missing
@@ -63,7 +63,7 @@ web/       Hugo site: templates, Sass and JavaScript
 ## Trade-offs
 
 - **Content is fetched at build time.** Pages are static, so they're fast, but publishing in Sanity needs a rebuild (triggered automatically by a webhook).
-- **Rich text is converted to Markdown.** This lets Hugo's built-in table of contents and reading time work without extra code.
+- **Rich text is converted to Markdown.** This lets Hugo's built-in reading time and heading IDs work without extra code.
 - **The Sanity dataset is public.** No API token is needed, so a fresh clone works straight away.
 - **Images are served from Sanity's CDN.** Sanity resizes and crops them, so Hugo doesn't process images.
 

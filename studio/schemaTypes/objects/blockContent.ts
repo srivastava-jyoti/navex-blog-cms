@@ -2,7 +2,7 @@ import {defineArrayMember, defineField, defineType} from 'sanity'
 
 /**
  * Rich-text body. Styles are limited to what renders cleanly as Markdown
- * (H2–H4 feed the table of contents; H1 is reserved for the post title).
+ * (H1 is reserved for the post title).
  */
 export const blockContent = defineType({
   name: 'blockContent',

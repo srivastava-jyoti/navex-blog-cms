@@ -1,7 +1,0 @@
-{{- /* Table of contents (h2–h4), only shown when the post has headings. */ -}}
-{{- if .Fragments.Headings }}
-  <nav class="toc" aria-labelledby="toc-title">
-    <h2 class="toc__title" id="toc-title">On this page</h2>
-    {{ .TableOfContents | replaceRE `<nav id="TableOfContents">\s*` "" | replaceRE `\s*</nav>\s*$` "" | safeHTML }}
-  </nav>
-{{- end -}}

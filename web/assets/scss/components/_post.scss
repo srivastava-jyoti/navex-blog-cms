@@ -4,8 +4,8 @@
   display: grid;
   gap: 1rem;
   justify-items: start;
-  max-width: $measure + 6rem;
-  margin-bottom: 2rem;
+  max-width: $measure;
+  margin: 0 auto 2rem;
 }
 
 .share {
@@ -28,67 +28,9 @@
   object-fit: cover;
 }
 
-// Mobile: TOC above the content. Desktop: content with a sticky TOC sidebar.
-.post-layout {
-  display: grid;
-  gap: 2rem;
-
-  @include from(lg) {
-    grid-template-columns: minmax(0, $measure) 16rem;
-    justify-content: space-between;
-    align-items: start;
-
-    &__aside {
-      position: sticky;
-      top: 2rem;
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    &__content {
-      grid-column: 1;
-      grid-row: 1;
-    }
-  }
-}
-
-.toc {
-  padding: 1rem 1.25rem;
-  border: 1px solid $color-border;
-  border-radius: $radius;
-  background: $color-surface;
-
-  &__title {
-    margin-bottom: 0.5rem;
-    font-family: $font-sans;
-    font-size: 0.85rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  ul {
-    margin: 0;
-    padding-left: 1rem;
-    list-style: none;
-  }
-
-  > ul {
-    padding-left: 0;
-  }
-
-  li {
-    margin-block: 0.35rem;
-  }
-
-  a {
-    color: $color-muted;
-    font-size: 0.95rem;
-    text-decoration: none;
-
-    &:hover {
-      color: $color-accent;
-    }
-  }
+.post-body {
+  max-width: $measure;
+  margin-inline: auto;
 }
 
 .prose {
