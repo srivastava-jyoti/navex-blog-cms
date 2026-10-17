@@ -2,7 +2,7 @@
 
 A simple blog CMS. Editors create **blog posts, categories and authors** in **Sanity Studio**, and **Hugo** renders them as a static website.
 
-- **Live site:** _coming soon (Netlify)_
+- **Live site:** [https://capable-strudel-e37216.netlify.app/](https://capable-strudel-e37216.netlify.app/)
 - **Walkthrough video:** _coming soon (`video/`)_
 
 ## Tech stack
@@ -68,6 +68,7 @@ web/                    Hugo site
   layouts/              page templates and partials
   assets/scss/          Sass styles
   assets/js/main.js     copy-link button
+netlify.toml            Netlify build settings
 ```
 
 ## How it works
@@ -77,6 +78,21 @@ web/                    Hugo site
 3. Hugo builds the website from those files.
 
 The files in `web/content/` are generated on every build and are **not committed**. Sanity is the single source of truth.
+
+## Deployment
+
+The site is hosted on Netlify and deploys automatically on every push to `main`. Build settings are in [`netlify.toml`](netlify.toml):
+
+- **Build command:** `npm run build`, which fetches content from Sanity and then builds the site with Hugo
+- **Publish directory:** `web/public`
+- **Pinned versions:** Node 22 and Hugo 0.168.0
+
+The Sanity settings are not stored in the repo. Set them in Netlify under **Site configuration → Environment variables**:
+
+| Variable            | Value        |
+| ------------------- | ------------ |
+| `SANITY_PROJECT_ID` | `9l9uv974`   |
+| `SANITY_DATASET`    | `production` |
 
 ## Content model
 
