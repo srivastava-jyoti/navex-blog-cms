@@ -1,55 +1,58 @@
-{{- /* Full-width hero band: title and meta on the left, hero image on the right. */ -}}
-{{ define "hero" }}
-  {{- $category := false }}{{ with .GetTerms "categories" }}{{ $category = index . 0 }}{{ end }}
-  <section class="post-hero{{ if not .Params.hero }} post-hero--no-image{{ end }}">
-    <div class="post-hero__text">
-      {{- with $category }}<a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
-      <h1 id="post-title">{{ .Title }}</h1>
-      {{ partial "post-meta.html" (dict "page" . "avatar" true) }}
-      {{ partial "share.html" . }}
-    </div>
-    {{- with .Params.hero }}
-      <div class="post-hero__media">
-        {{ partial "image.html" (dict "image" . "sizes" "(min-width: 64rem) 50vw, 100vw" "eager" true) }}
-      </div>
-    {{- end }}
-  </section>
-{{ end }}
-
-{{ define "main" }}
+{{ define "content" }}
   {{- /* Category is optional: the page must render without it. */}}
   {{- $category := false }}{{ with .GetTerms "categories" }}{{ $category = index . 0 }}{{ end }}
   {{- $others := where (where site.RegularPages "Section" "posts") "RelPermalink" "ne" .RelPermalink }}
 
-  <div class="post-layout">
-    <article class="prose" aria-labelledby="post-title">
-      {{ .Content }}
-    </article>
+  <article class="post" aria-labelledby="post-title">
+    {{- /* Full-width hero band: title and meta on the left, hero image on the right. */}}
+    <header class="post-hero{{ if not .Params.hero }} post-hero--no-image{{ end }}">
+      <div class="post-hero__text">
+        {{- with $category }}<a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+        <h1 id="post-title">{{ .Title }}</h1>
+        {{ partial "post-meta.html" (dict "page" . "avatar" true) }}
+        {{ partial "share.html" . }}
+      </div>
+      {{- with .Params.hero }}
+        <div class="post-hero__media">
+          {{ partial "image.html" (dict "image" . "sizes" "(min-width: 64rem) 50vw, 100vw" "eager" true) }}
+        </div>
+      {{- end }}
+    </header>
 
-    {{- with first 5 $others }}
-      <aside class="sidebar" aria-labelledby="recent-title">
-        <h2 class="sidebar__title" id="recent-title">Recent posts</h2>
-        <ul class="sidebar__list" role="list">
-          {{- range . }}
-            <li>
-              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-              {{- if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>{{ end }}
-            </li>
-          {{- end }}
-        </ul>
-      </aside>
-    {{- end }}
-  </div>
+    <div class="container page post__body">
+      <div class="post-layout">
+        <div class="prose">
+          {{ .Content }}
+        </div>
+
+        {{- with first 5 $others }}
+          <aside class="sidebar" aria-labelledby="recent-title">
+            <h2 class="sidebar__title" id="recent-title">Recent posts</h2>
+            <ul class="sidebar__list" role="list">
+              {{- range . }}
+                <li>
+                  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                  {{- if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>{{ end }}
+                </li>
+              {{- end }}
+            </ul>
+          </aside>
+        {{- end }}
+      </div>
+    </div>
+  </article>
 
   {{- /* You might like: posts from the same category first, then the newest other posts. */}}
   {{- $sameCategory := slice }}
   {{- with $category }}{{ $sameCategory = where .Pages "RelPermalink" "ne" $.RelPermalink }}{{ end }}
   {{- with first 3 (union $sameCategory $others) }}
-    <section class="related" aria-labelledby="related-title">
-      <h2 class="related__title" id="related-title">You might like</h2>
-      <div class="card-grid">
-        {{- range . }}{{ partial "post-card.html" (dict "page" . "headingLevel" 3) }}{{ end }}
-      </div>
-    </section>
+    <div class="container related-wrap">
+      <section class="related" aria-labelledby="related-title">
+        <h2 class="related__title" id="related-title">You might like</h2>
+        <div class="card-grid">
+          {{- range . }}{{ partial "post-card.html" (dict "page" . "headingLevel" 3) }}{{ end }}
+        </div>
+      </section>
+    </div>
   {{- end }}
 {{ end }}

@@ -145,6 +145,15 @@
   }
 }
 
+// The article's body container leaves the bottom spacing to "You might like".
+.post:has(+ .related-wrap) .post__body {
+  padding-bottom: 0;
+}
+
+.related-wrap {
+  padding-bottom: 4rem;
+}
+
 .related {
   margin-top: 4rem;
   padding-top: 2.5rem;

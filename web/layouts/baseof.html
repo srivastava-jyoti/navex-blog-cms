@@ -7,11 +7,13 @@
     <a class="skip-link" href="#main">Skip to content</a>
     {{ partial "header.html" . }}
     <main id="main" tabindex="-1">
-      {{- /* Optional full-width area above the page content (used by blog posts). */}}
-      {{ block "hero" . }}{{ end }}
-      <div class="container page">
-        {{ block "main" . }}{{ end }}
-      </div>
+      {{- /* Templates fill "main" inside the standard container, or override
+           "content" to control the full width (blog posts do this). */}}
+      {{ block "content" . }}
+        <div class="container page">
+          {{ block "main" . }}{{ end }}
+        </div>
+      {{ end }}
     </main>
     {{ partial "footer.html" . }}
   </body>

@@ -3,5 +3,5 @@
     <h1>{{ site.Title }}</h1>
     <p>{{ site.Params.description }}</p>
   </header>
-  {{ partial "post-list.html" (where site.RegularPages "Section" "posts") }}
+  {{ partial "post-list.html" (dict "pages" (where site.RegularPages "Section" "posts")) }}
 {{ end }}

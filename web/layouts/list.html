@@ -2,5 +2,5 @@
   <header class="page-intro">
     <h1>{{ if eq .Section "posts" }}All posts{{ else }}{{ .Title }}{{ end }}</h1>
   </header>
-  {{ partial "post-list.html" .Pages }}
+  {{ partial "post-list.html" (dict "pages" .Pages) }}
 {{ end }}

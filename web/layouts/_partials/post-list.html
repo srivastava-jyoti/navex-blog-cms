@@ -1,7 +1,7 @@
-{{- /* Grid of post cards. Context: a page collection. */ -}}
-{{- with . }}
+{{- /* Grid of post cards. Params: pages, headingLevel (default 2). */ -}}
+{{- with .pages }}
   <div class="card-grid">
-    {{- range . }}{{ partial "post-card.html" (dict "page" .) }}{{ end }}
+    {{- range . }}{{ partial "post-card.html" (dict "page" . "headingLevel" ($.headingLevel | default 2)) }}{{ end }}
   </div>
 {{- else }}
   <p class="empty-state">No posts yet.</p>

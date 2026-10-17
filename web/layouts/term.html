@@ -9,5 +9,5 @@
     </div>
   </header>
   <h2 class="section-title">Posts</h2>
-  {{ partial "post-list.html" .Pages }}
+  {{ partial "post-list.html" (dict "pages" .Pages "headingLevel" 3) }}
 {{ end }}
