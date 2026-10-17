@@ -70,6 +70,66 @@
   }
 }
 
+// Collapsible table of contents above the article (closed by default).
+.toc {
+  margin-bottom: 2rem;
+  border-block: 1px solid $color-border;
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.75rem;
+    color: $color-accent;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    // Arrow that rotates when the list is open.
+    &::before {
+      content: '';
+      width: 0.45rem;
+      height: 0.45rem;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(-45deg);
+      transition: transform 0.15s;
+    }
+  }
+
+  &[open] &__toggle::before {
+    transform: rotate(45deg);
+  }
+
+  nav {
+    padding-bottom: 1rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style: none;
+  }
+
+  li {
+    margin-top: 0.35rem;
+  }
+
+  a {
+    color: $color-text;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-accent;
+      text-decoration: underline;
+    }
+  }
+}
+
 .sidebar {
   padding: 1.25rem;
   border: 1px solid $color-border;

@@ -1,0 +1,9 @@
+{{- /* Collapsible table of contents built from the post's h2/h3 headings. Hidden when there are none. */ -}}
+{{- if .Fragments.Headings }}
+  <details class="toc">
+    <summary class="toc__toggle">Table of contents</summary>
+    <nav aria-label="Table of contents">
+      {{ .TableOfContents | replaceRE `<nav id="TableOfContents">\s*` "" | replaceRE `\s*</nav>\s*$` "" | safeHTML }}
+    </nav>
+  </details>
+{{- end -}}
