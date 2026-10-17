@@ -1,0 +1,19 @@
+# Netlify build configuration (overrides the build settings in the Netlify UI).
+[build]
+  # Fetch content from Sanity, then build the Hugo site with the site's real URL.
+  command = "npm run build -- --baseURL \"$URL/\""
+  publish = "web/public"
+
+[build.environment]
+  NODE_VERSION = "22"
+  HUGO_VERSION = "0.168.0"
+  # Public, read-only Sanity dataset: no token needed.
+  SANITY_PROJECT_ID = "9l9uv974"
+  SANITY_DATASET = "production"
+
+# Deploy previews and branch deploys use their own URL.
+[context.deploy-preview]
+  command = "npm run build -- --baseURL \"$DEPLOY_PRIME_URL/\""
+
+[context.branch-deploy]
+  command = "npm run build -- --baseURL \"$DEPLOY_PRIME_URL/\""
