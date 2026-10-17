@@ -17,3 +17,15 @@
 
 [context.branch-deploy]
   command = "npm run build -- --baseURL \"$DEPLOY_PRIME_URL/\""
+
+# CSS and JS filenames contain a content hash (Hugo fingerprinting), so they
+# can be cached for a year: a change produces a new filename.
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

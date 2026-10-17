@@ -1,5 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{{- /* Open the connection to Sanity's image CDN early, before images are requested. */}}
+<link rel="preconnect" href="https://cdn.sanity.io" crossorigin>
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
 <meta name="description" content="{{ .Description | default .Params.bio | default site.Params.description | plainify | truncate 160 }}">
 {{- with resources.Get "scss/main.scss" }}

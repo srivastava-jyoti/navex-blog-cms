@@ -1,6 +1,7 @@
 {{- /*
   Responsive Sanity image, cropped to 16:9 around the editor's hotspot.
-  Params: image (front matter map: url, alt, focalX, focalY), sizes, eager.
+  Params: image (front matter map: url, alt, focalX, focalY), sizes,
+  eager (above-the-fold image: no lazy loading, high download priority).
 */ -}}
 {{- with .image }}{{ with .url -}}
   {{- $img := $.image -}}
@@ -14,5 +15,5 @@
     sizes="{{ $.sizes | default "100vw" }}"
     width="1200" height="675"
     alt="{{ $img.alt }}"
-    {{- if not $.eager }} loading="lazy"{{ end }}>
+    {{- if $.eager }} fetchpriority="high"{{ else }} loading="lazy"{{ end }}>
 {{- end }}{{ end -}}
