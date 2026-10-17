@@ -6,8 +6,10 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     {{ partial "header.html" . }}
-    <main id="main" class="site-main" tabindex="-1">
-      <div class="container">
+    <main id="main" tabindex="-1">
+      {{- /* Optional full-width area above the page content (used by blog posts). */}}
+      {{ block "hero" . }}{{ end }}
+      <div class="container page">
         {{ block "main" . }}{{ end }}
       </div>
     </main>

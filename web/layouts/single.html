@@ -1,27 +1,47 @@
+{{- /* Full-width hero band: title and meta on the left, hero image on the right. */ -}}
+{{ define "hero" }}
+  {{- $category := false }}{{ with .GetTerms "categories" }}{{ $category = index . 0 }}{{ end }}
+  <section class="post-hero{{ if not .Params.hero }} post-hero--no-image{{ end }}">
+    <div class="post-hero__text">
+      {{- with $category }}<a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+      <h1 id="post-title">{{ .Title }}</h1>
+      {{ partial "post-meta.html" (dict "page" . "avatar" true) }}
+      {{ partial "share.html" . }}
+    </div>
+    {{- with .Params.hero }}
+      <div class="post-hero__media">
+        {{ partial "image.html" (dict "image" . "sizes" "(min-width: 64rem) 50vw, 100vw" "eager" true) }}
+      </div>
+    {{- end }}
+  </section>
+{{ end }}
+
 {{ define "main" }}
   {{- /* Category is optional: the page must render without it. */}}
   {{- $category := false }}{{ with .GetTerms "categories" }}{{ $category = index . 0 }}{{ end }}
-  <article class="post">
-    <header class="post-header">
-      {{- with $category }}<a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
-      <h1>{{ .Title }}</h1>
-      {{ partial "post-meta.html" (dict "page" . "avatar" true) }}
-      {{ partial "share.html" . }}
-    </header>
+  {{- $others := where (where site.RegularPages "Section" "posts") "RelPermalink" "ne" .RelPermalink }}
 
-    {{- with .Params.hero }}
-      <div class="post-hero">
-        {{ partial "image.html" (dict "image" . "sizes" "(min-width: 72rem) 72rem, 100vw" "eager" true) }}
-      </div>
+  <div class="post-layout">
+    <article class="prose" aria-labelledby="post-title">
+      {{ .Content }}
+    </article>
+
+    {{- with first 5 $others }}
+      <aside class="sidebar" aria-labelledby="recent-title">
+        <h2 class="sidebar__title" id="recent-title">Recent posts</h2>
+        <ul class="sidebar__list" role="list">
+          {{- range . }}
+            <li>
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              {{- if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>{{ end }}
+            </li>
+          {{- end }}
+        </ul>
+      </aside>
     {{- end }}
-
-    <div class="post-body">
-      <div class="prose">{{ .Content }}</div>
-    </div>
-  </article>
+  </div>
 
   {{- /* You might like: posts from the same category first, then the newest other posts. */}}
-  {{- $others := where (where site.RegularPages "Section" "posts") "RelPermalink" "ne" .RelPermalink }}
   {{- $sameCategory := slice }}
   {{- with $category }}{{ $sameCategory = where .Pages "RelPermalink" "ne" $.RelPermalink }}{{ end }}
   {{- with first 3 (union $sameCategory $others) }}

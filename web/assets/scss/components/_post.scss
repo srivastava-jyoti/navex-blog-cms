@@ -1,11 +1,49 @@
 @use '../abstracts' as *;
 
-.post-header {
+// Full-width hero band. Text lines up with the site container's left edge;
+// the image runs to the right edge of the window on desktop.
+.post-hero {
   display: grid;
-  gap: 1rem;
-  justify-items: start;
-  max-width: $measure;
-  margin: 0 auto 2rem;
+  background: $color-band;
+  border-bottom: 1px solid $color-border;
+
+  &__text {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+    justify-items: start;
+    padding: 2rem 1rem;
+
+    @include from(md) {
+      padding: 3rem 2rem;
+    }
+  }
+
+  &__media img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  @include from(lg) {
+    grid-template-columns: 1fr 1fr;
+    min-height: 26rem;
+    padding-left: max(2rem, calc((100% - #{$container}) / 2));
+
+    &__text {
+      padding: 3rem 3rem 3rem 0;
+    }
+
+    &__media img {
+      aspect-ratio: auto;
+    }
+
+    &--no-image {
+      grid-template-columns: minmax(0, $measure + 6rem);
+      min-height: 0;
+    }
+  }
 }
 
 .share {
@@ -20,17 +58,52 @@
   }
 }
 
-.post-hero img {
-  width: 100%;
-  margin-bottom: 2.5rem;
-  border-radius: $radius;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+// Article on the left, "Recent posts" sidebar on the right (stacked on mobile).
+.post-layout {
+  display: grid;
+  gap: 3rem;
+
+  @include from(lg) {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    gap: 4rem;
+    align-items: start;
+  }
 }
 
-.post-body {
-  max-width: $measure;
-  margin-inline: auto;
+.sidebar {
+  padding: 1.25rem;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  background: $color-surface;
+
+  &__title {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  &__list li + li {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid $color-border;
+  }
+
+  a {
+    display: block;
+    font-weight: 600;
+    line-height: 1.35;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  time {
+    display: block;
+    margin-top: 0.25rem;
+    color: $color-muted;
+    font-size: 0.85rem;
+  }
 }
 
 .prose {
