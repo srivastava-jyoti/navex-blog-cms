@@ -23,4 +23,4 @@ I used **Claude Code** (Anthropic, Claude Opus 5.5) as a coding assistant on thi
 
 - Type checks, Sanity schema validation and unit tests
 - Full build from Sanity content to Hugo
-- Manual testing on desktop and mobile, in light and dark mode
+- Manual testing in the browser on desktop and mobile

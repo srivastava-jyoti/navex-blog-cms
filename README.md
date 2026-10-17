@@ -1,23 +1,27 @@
 # Navex Blog CMS
 
-A simple blog: content is managed in **Sanity Studio** and rendered by **Hugo**.
+A simple blog CMS. Editors create **blog posts, categories and authors** in **Sanity Studio**, and **Hugo** renders them as a static website.
 
-- **Live site:** _coming soon_
-- **Walkthrough video:** _coming soon_
+- **Live site:** _coming soon (Netlify)_
+- **Walkthrough video:** _coming soon (`video/`)_
 
 ## Tech stack
 
-- Sanity Studio (TypeScript): blog posts, categories, authors
-- Hugo: static site, styled with Sass
-- Netlify: hosting
+| Part      | Technology                         |
+| --------- | ---------------------------------- |
+| CMS       | Sanity Studio (TypeScript)         |
+| Website   | Hugo (extended), Sass (Dart Sass)  |
+| Hosting   | Netlify                            |
 
 ## Getting started
 
-You need **Node.js 22+** and **Hugo extended 0.158+**.
+**Requirements:** Node.js 22.12+ and Hugo extended 0.158+.
 
-**Run the website**
+### Run the website
 
 ```bash
+git clone https://github.com/srivastava-jyoti/navex-blog-cms.git
+cd navex-blog-cms
 npm ci
 cp .env.example .env
 npm run dev
@@ -25,7 +29,9 @@ npm run dev
 
 Open http://localhost:1313
 
-**Run Sanity Studio**
+The Sanity dataset is public, so no API token is needed. `.env.example` already contains the project ID.
+
+### Run Sanity Studio
 
 ```bash
 cd studio
@@ -34,46 +40,93 @@ cp .env.example .env
 npm run dev
 ```
 
-Open http://localhost:3333
+Open http://localhost:3333 and sign in with a Sanity account that has access to the project.
+
+## Scripts
+
+| Command           | What it does                                          |
+| ----------------- | ----------------------------------------------------- |
+| `npm run dev`     | Fetch content from Sanity and start the Hugo server   |
+| `npm run build`   | Fetch content and build the site into `web/public/`   |
+| `npm run fetch`   | Fetch content from Sanity only                        |
+| `npm test`        | Run the unit tests                                    |
+| `npm run studio`  | Start Sanity Studio                                   |
 
 ## Project structure
 
 ```
-studio/    Sanity Studio: schemas and sample content
-scripts/   Fetches content from Sanity and converts it for Hugo
-web/       Hugo site: templates, Sass and JavaScript
+studio/                 Sanity Studio
+  schemaTypes/
+    documents/          post, category, author
+    objects/            rich-text body, image with alt text (shared)
+  seed/seed.ndjson      sample content
+scripts/
+  fetch-sanity.ts       fetches content from Sanity and writes Markdown for Hugo
+  lib/portableText.ts   converts Sanity rich text to Markdown (with tests)
+  hugo.mjs              runs Hugo with Dart Sass
+web/                    Hugo site
+  layouts/              page templates and partials
+  assets/scss/          Sass styles
+  assets/js/main.js     copy-link button
 ```
 
 ## How it works
 
-1. Editors create posts, categories and authors in Sanity Studio.
-2. `npm run fetch` fetches the published content from Sanity and saves it as Markdown files in `web/content/`. These files are generated on every build and are not committed.
-3. Hugo builds the site from those files.
+1. Editors create and publish content in Sanity Studio.
+2. `npm run fetch` runs one GROQ query that returns all published posts, authors and categories. It saves them as Markdown files in `web/content/`.
+3. Hugo builds the website from those files.
+
+The files in `web/content/` are generated on every build and are **not committed**. Sanity is the single source of truth.
+
+## Content model
+
+| Type     | Fields                                                                                   |
+| -------- | ---------------------------------------------------------------------------------------- |
+| Post     | title, slug, excerpt, body (rich text), publish date, hero image, category, author       |
+| Category | title, slug, description (optional)                                                      |
+| Author   | name, slug, bio, profile image (optional)                                                |
+
+**Validation:**
+- Required fields and length limits (for example, the excerpt is 50–200 characters).
+- Unique slugs.
+- Required category and author references.
+- Alt text required on every uploaded image.
 
 ## Features
 
-- Blog post page with title, publish date, hero image and content
-- Author and category shown on each post, linking to their pages
-- Category and author listing pages (Hugo taxonomies)
-- Reading time, a table of contents ("In this article", sticky on desktop) and a copy-link button
-- Full-width hero with the title beside the image
-- "You might like" section with related posts (same category first)
-- Responsive layout for mobile and desktop, styled with Sass
-- Semantic HTML and accessibility basics (alt text, heading order, keyboard focus)
-- Validation in Sanity, and pages still render when optional fields are missing
+**Blog post page**
+- Title, publish date, hero image and content
+- Category and author shown on the post, linking to their pages
+- Reading time (e.g. "2 min read")
+- Copy-link button
+- Table of contents ("In this article"), sticky on desktop
+- "You might like": related posts, same category first
+
+**Other pages**
+- Home page and an all-posts page
+- Category and author listing pages, plus a page for each category and author (Hugo taxonomies)
+- A 404 page
+
+**Quality**
+- Sass styles, mobile-first, for mobile and desktop
+- Semantic HTML: landmarks, one `<h1>` per page, correct heading order, alt text, visible keyboard focus
+- Handles missing data: posts without a title or slug are skipped at build time, and pages still render when optional fields (hero image, category, author photo) are missing
 
 ## Trade-offs
 
-- **Content is fetched at build time.** Pages are static, so they're fast, but publishing in Sanity needs a rebuild (triggered automatically by a webhook).
-- **Rich text is converted to Markdown.** This lets Hugo's built-in reading time and heading IDs work without extra code.
-- **The Sanity dataset is public.** No API token is needed, so a fresh clone works straight away.
-- **Images are served from Sanity's CDN.** Sanity resizes and crops them, so Hugo doesn't process images.
+- **Content is fetched at build time.** The site is static, so it's fast and stays up even if Sanity is down. In return, publishing in Sanity needs a rebuild (on Netlify, a Sanity webhook can trigger this).
+- **Rich text is converted to Markdown.** Hugo's built-in reading time and table of contents then work without extra code. The cost is a small custom converter, which has its own unit tests.
+- **Images are served from Sanity's CDN.** Sanity resizes and crops them (respecting the editor's focal point), so Hugo doesn't need to process images.
+- **The dataset is public.** No API token is needed, so a fresh clone builds straight away.
+- **Dart Sass comes from npm** (`sass-embedded`). Local and Netlify builds use the same Sass version with nothing extra to install.
 
 ## Sample content
 
-The repo includes 6 sample posts, 4 categories and 3 authors in `studio/seed/seed.ndjson`. To load them into a Sanity project:
+The repo includes **6 posts, 4 categories and 3 authors**. Every post is linked to a category and an author. To load them into your own Sanity project:
 
 ```bash
 cd studio
 npm run seed:import
 ```
+
+This replaces any documents with the same IDs in the `production` dataset.
