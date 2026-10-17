@@ -1,0 +1,83 @@
+@use '../abstracts' as *;
+
+.container {
+  width: 100%;
+  max-width: $container + 4rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @include from(md) {
+    padding-inline: 2rem;
+  }
+}
+
+.site-header {
+  border-bottom: 1px solid $color-border;
+  background: $color-surface;
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block: 1rem;
+  }
+
+  &__brand {
+    color: $color-text;
+    font-family: $font-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.25rem;
+
+  a {
+    color: $color-text;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+}
+
+main {
+  flex: 1;
+  padding-block: 2.5rem 4rem;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.site-footer {
+  border-top: 1px solid $color-border;
+  padding-block: 1.5rem;
+  color: $color-muted;
+  font-size: 0.9rem;
+}
+
+.page-intro {
+  margin-bottom: 2.5rem;
+
+  p {
+    margin-top: 0.5rem;
+    color: $color-muted;
+    font-size: 1.2rem;
+  }
+}
+
+.section-title {
+  margin-bottom: 1.5rem;
+}
+
+.empty-state {
+  color: $color-muted;
+}

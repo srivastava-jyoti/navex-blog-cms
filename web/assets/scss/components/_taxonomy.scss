@@ -1,0 +1,60 @@
+@use '../abstracts' as *;
+
+// /categories/ and /authors/ listing pages.
+.term-list {
+  display: grid;
+  gap: 1rem;
+
+  @include from(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid $color-border;
+    border-radius: $radius;
+    background: $color-surface;
+
+    p {
+      margin-top: 0.25rem;
+      color: $color-muted;
+    }
+  }
+
+  &__title {
+    font-size: 1.3rem;
+  }
+
+  &__count {
+    font-size: 0.85rem;
+  }
+}
+
+// Header on a single category or author page.
+.term-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid $color-border;
+
+  &__label {
+    color: $color-accent;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  p:not(.term-header__label) {
+    max-width: $measure;
+    margin-top: 0.5rem;
+    color: $color-muted;
+    font-size: 1.1rem;
+  }
+}

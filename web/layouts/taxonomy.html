@@ -2,25 +2,20 @@
   {{- $isAuthors := eq .Data.Plural "authors" }}
   <header class="page-intro">
     <h1>{{ .Title }}</h1>
-    <p>{{ if $isAuthors }}The people writing for {{ site.Title }}.{{ else }}Browse posts by topic.{{ end }}</p>
   </header>
-
   {{- with .Data.Terms.Alphabetical }}
-    {{- if $isAuthors }}
-      <div class="author-grid">
-        {{- range . }}{{ partial "author-card.html" (dict "author" .Page) }}{{ end }}
-      </div>
-    {{- else }}
-      <ul class="category-list" role="list">
-        {{- range . }}
-          <li class="category-list__item">
-            <h2 class="category-list__title"><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a></h2>
-            {{- with .Page.Params.description }}<p class="muted">{{ . }}</p>{{ end }}
-            <p class="muted"><small>{{ .Count }} {{ cond (eq .Count 1) "post" "posts" }}</small></p>
-          </li>
-        {{- end }}
-      </ul>
-    {{- end }}
+    <ul class="term-list" role="list">
+      {{- range . }}
+        <li class="term-list__item">
+          {{- if $isAuthors }}{{ partial "avatar.html" (dict "author" .Page) }}{{ end }}
+          <div>
+            <h2 class="term-list__title"><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a></h2>
+            {{- with (cond $isAuthors .Page.Params.bio .Page.Params.description) }}<p>{{ . }}</p>{{ end }}
+            <p class="term-list__count">{{ .Count }} {{ cond (eq .Count 1) "post" "posts" }}</p>
+          </div>
+        </li>
+      {{- end }}
+    </ul>
   {{- else }}
     <p class="empty-state">Nothing here yet.</p>
   {{- end }}

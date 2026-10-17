@@ -1,9 +1,7 @@
-{{- /* Table of contents (h2–h4). Open by default; main.js collapses it on small screens. */ -}}
+{{- /* Table of contents (h2–h4), only shown when the post has headings. */ -}}
 {{- if .Fragments.Headings }}
-  {{- with .TableOfContents }}{{ if in . "<li>" }}
-    <details class="toc" open data-toc>
-      <summary class="toc__summary"><h2 class="toc__title" id="toc-title">On this page</h2></summary>
-      {{ replace . "<nav id=\"TableOfContents\">" "<nav id=\"TableOfContents\" aria-labelledby=\"toc-title\">" | safeHTML }}
-    </details>
-  {{- end }}{{ end }}
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 class="toc__title" id="toc-title">On this page</h2>
+    {{ .TableOfContents | replaceRE `<nav id="TableOfContents">\s*` "" | replaceRE `\s*</nav>\s*$` "" | safeHTML }}
+  </nav>
 {{- end -}}

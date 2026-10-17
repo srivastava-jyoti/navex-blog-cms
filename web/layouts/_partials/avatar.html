@@ -1,12 +1,9 @@
-{{- /* Author avatar. Params: author (term page), size ("", "lg", "xl"). Falls back to initials. */ -}}
-{{- $author := .author -}}
-{{- $mod := cond (ne (.size | default "") "") (printf " avatar--%s" .size) "" -}}
-{{- with $author.Params.image -}}
-  {{- $px := cond (eq $.size "xl") 224 (cond (eq $.size "lg") 160 96) -}}
-  <img class="avatar{{ $mod }}" src="{{ partial "functions/img-url.html" (dict "image" . "width" $px "height" $px) }}"
-    width="{{ $px }}" height="{{ $px }}" alt="" loading="lazy" decoding="async">
+{{- /* Author avatar (decorative; the name is always shown next to it). Params: author, size ("" or "lg"). Falls back to initials. */ -}}
+{{- $a := .author -}}
+{{- $class := cond (eq .size "lg") "avatar avatar--lg" "avatar" -}}
+{{- with $a.Params.image -}}
+  <img class="{{ $class }}" src="{{ partial "functions/img-url.html" (dict "image" . "width" 192 "height" 192) }}" width="96" height="96" alt="" loading="lazy">
 {{- else -}}
-  {{- $initials := slice -}}
-  {{- range first 2 (split $author.Title " ") }}{{ $initials = $initials | append (substr . 0 1) }}{{ end -}}
-  <span class="avatar avatar--initials{{ $mod }}" aria-hidden="true">{{ delimit $initials "" | upper }}</span>
+  {{- $initials := slice }}{{ range first 2 (split $a.Title " ") }}{{ $initials = $initials | append (substr . 0 1) }}{{ end -}}
+  <span class="{{ $class }} avatar--initials" aria-hidden="true">{{ delimit $initials "" | upper }}</span>
 {{- end -}}

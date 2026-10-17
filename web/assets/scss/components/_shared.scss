@@ -1,0 +1,75 @@
+@use '../abstracts' as *;
+
+.pill {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.15em 0.7em;
+  border-radius: 999px;
+  background: $color-accent-soft;
+  color: $color-accent;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  color: $color-muted;
+  font-size: 0.9rem;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.avatar {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+
+  &--lg {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  // Shown when an author has no profile image.
+  &--initials {
+    display: inline-grid;
+    place-items: center;
+    background: $color-accent-soft;
+    color: $color-accent;
+    font-weight: 700;
+  }
+
+  &--lg.avatar--initials {
+    font-size: 1.75rem;
+  }
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border: 1px solid $color-accent;
+  border-radius: 999px;
+  background: $color-surface;
+  color: $color-accent;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-accent;
+    color: $color-surface;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}

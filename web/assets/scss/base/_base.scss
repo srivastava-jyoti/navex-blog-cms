@@ -1,0 +1,81 @@
+@use '../abstracts' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg;
+  color: $color-text;
+  font-family: $font-sans;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: $font-serif;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 1.6rem + 2vw, 3rem);
+}
+
+h2 {
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: $color-accent;
+  text-underline-offset: 0.15em;
+}
+
+:focus-visible {
+  outline: 3px solid $color-focus;
+  outline-offset: 2px;
+}
+
+ul[role='list'] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background: $color-text;
+  color: $color-bg;
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: none;
+  }
+}

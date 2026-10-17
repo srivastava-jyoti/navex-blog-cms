@@ -1,0 +1,8 @@
+{{- /* Grid of post cards. Context: a page collection. */ -}}
+{{- with . }}
+  <div class="card-grid">
+    {{- range . }}{{ partial "post-card.html" (dict "page" .) }}{{ end }}
+  </div>
+{{- else }}
+  <p class="empty-state">No posts yet.</p>
+{{- end -}}

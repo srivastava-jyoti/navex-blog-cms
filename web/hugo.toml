@@ -21,10 +21,3 @@ summaryLength = 30
   startLevel = 2
   endLevel = 4
   ordered = false
-
-[build]
-  [build.buildStats]
-    enable = false
-
-[pagination]
-  pagerSize = 9

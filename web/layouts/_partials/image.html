@@ -1,34 +1,18 @@
 {{- /*
-  Responsive Sanity image.
-  Params:
-    image   map from front matter (url, alt, width, height, lqip, focalX, focalY) — required
-    ratio   width/height to crop to (e.g. 1.7778); defaults to the original ratio
-    sizes   sizes attribute (default "100vw")
-    eager   true for above-the-fold images (no lazy loading, high priority)
-    class   optional class on <img>
+  Responsive Sanity image, cropped to 16:9 around the editor's hotspot.
+  Params: image (front matter map: url, alt, focalX, focalY), sizes, eager.
 */ -}}
 {{- with .image }}{{ with .url -}}
   {{- $img := $.image -}}
-  {{- $origW := $img.width | default 1600 -}}
-  {{- $origH := $img.height | default 900 -}}
-  {{- $ratio := $.ratio | default (div (float $origW) $origH) -}}
-  {{- $widths := slice 400 640 960 1280 1600 -}}
   {{- $srcset := slice -}}
-  {{- range $widths -}}
-    {{- $h := math.Round (div (float .) $ratio) -}}
-    {{- $u := partial "functions/img-url.html" (dict "image" $img "width" . "height" (cond (isset $ "ratio") $h false)) -}}
-    {{- $srcset = $srcset | append (printf "%s %dw" $u .) -}}
+  {{- range slice 480 800 1200 1600 -}}
+    {{- $srcset = $srcset | append (printf "%s %dw" (partial "functions/img-url.html" (dict "image" $img "width" . "height" (math.Round (div (float .) 1.7778)))) .) -}}
   {{- end -}}
-  {{- $defaultW := 960 -}}
   <img
-    src="{{ partial "functions/img-url.html" (dict "image" $img "width" $defaultW "height" (cond (isset $ "ratio") (math.Round (div (float $defaultW) $ratio)) false)) }}"
+    src="{{ partial "functions/img-url.html" (dict "image" $img "width" 1200 "height" 675) }}"
     srcset="{{ delimit $srcset ", " }}"
     sizes="{{ $.sizes | default "100vw" }}"
-    width="{{ $defaultW }}"
-    height="{{ math.Round (div (float $defaultW) $ratio) }}"
+    width="1200" height="675"
     alt="{{ $img.alt }}"
-    {{- with $.class }} class="{{ . }}"{{ end }}
-    {{- if $.eager }} fetchpriority="high"{{ else }} loading="lazy"{{ end }}
-    decoding="async"
-    {{- with $img.lqip }} style="background-image:url({{ . | safeURL }});background-size:cover"{{ end }}>
+    {{- if not $.eager }} loading="lazy"{{ end }}>
 {{- end }}{{ end -}}

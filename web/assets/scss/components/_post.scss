@@ -2,91 +2,172 @@
 
 .post-header {
   display: grid;
-  gap: var(--space-m);
+  gap: 1rem;
+  justify-items: start;
   max-width: $measure + 6rem;
-  margin-bottom: var(--space-xl);
+  margin-bottom: 2rem;
+}
 
-  &__excerpt {
-    color: var(--color-text-muted);
-    font-size: var(--step-1);
-    line-height: 1.45;
+.share {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &__status {
+    color: $color-accent;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 }
 
-.post-hero {
-  margin-bottom: var(--space-xl);
-  overflow: hidden;
-  border-radius: $radius-md;
-  background-color: var(--color-surface-muted);
-  background-size: cover;
+.post-hero img {
+  width: 100%;
+  margin-bottom: 2.5rem;
+  border-radius: $radius;
   aspect-ratio: 16 / 9;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  figcaption {
-    padding: var(--space-xs) var(--space-m);
-    color: var(--color-text-muted);
-    font-size: var(--step--1);
-  }
+  object-fit: cover;
 }
 
-// Mobile: single column (TOC + share above content).
-// Desktop: content column with a sticky sidebar.
+// Mobile: TOC above the content. Desktop: content with a sticky TOC sidebar.
 .post-layout {
   display: grid;
-  gap: var(--space-xl);
+  gap: 2rem;
 
   @include from(lg) {
-    grid-template-columns: minmax(0, $measure) minmax(14rem, 18rem);
+    grid-template-columns: minmax(0, $measure) 16rem;
     justify-content: space-between;
     align-items: start;
-  }
 
-  &__aside {
-    display: grid;
-    gap: var(--space-l);
-
-    @include from(lg) {
+    &__aside {
       position: sticky;
-      top: calc(var(--header-height) + var(--space-l));
+      top: 2rem;
       grid-column: 2;
       grid-row: 1;
-      max-height: calc(100vh - var(--header-height) - var(--space-2xl));
-      overflow-y: auto;
     }
-  }
 
-  &__content {
-    min-width: 0;
-
-    @include from(lg) {
+    &__content {
       grid-column: 1;
       grid-row: 1;
     }
   }
 }
 
-.post-footer {
-  display: grid;
-  gap: var(--space-xl);
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-xl);
-  border-top: 1px solid var(--color-border);
+.toc {
+  padding: 1rem 1.25rem;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  background: $color-surface;
 
-  &__filed {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-xs);
-    color: var(--color-text-muted);
-    font-size: var(--step--1);
+  &__title {
+    margin-bottom: 0.5rem;
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1rem;
+    list-style: none;
+  }
+
+  > ul {
+    padding-left: 0;
+  }
+
+  li {
+    margin-block: 0.35rem;
+  }
+
+  a {
+    color: $color-muted;
+    font-size: 0.95rem;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-accent;
+    }
   }
 }
 
-.related {
-  margin-top: var(--space-2xl);
+.prose {
+  line-height: 1.75;
+
+  > * + * {
+    margin-top: 1.25em;
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin-top: 2em;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.4em;
+  }
+
+  blockquote {
+    margin-inline: 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 4px solid $color-accent;
+    background: $color-accent-soft;
+    font-style: italic;
+  }
+
+  code {
+    padding: 0.1em 0.3em;
+    border-radius: 0.25rem;
+    background: $color-accent-soft;
+    font-size: 0.9em;
+  }
+
+  .post-image {
+    width: 100%;
+    border-radius: $radius;
+  }
+}
+
+.post-footer {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid $color-border;
+}
+
+.author-card,
+.category-box {
+  padding: 1.25rem;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  background: $color-surface;
+}
+
+.author-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+
+  &__name {
+    font-size: 1.3rem;
+  }
+
+  &__bio {
+    margin-top: 0.25rem;
+    color: $color-muted;
+  }
+}
+
+.category-box {
+  &__title {
+    font-size: 1.15rem;
+  }
+
+  p {
+    margin-top: 0.25rem;
+    color: $color-muted;
+  }
 }

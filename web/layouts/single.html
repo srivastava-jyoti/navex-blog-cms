@@ -1,62 +1,42 @@
 {{ define "main" }}
-  {{- /* Author and category are optional: templates must cope with either missing. */}}
+  {{- /* Author and category are optional: the page must render without them. */}}
   {{- $author := false }}{{ with .GetTerms "authors" }}{{ $author = index . 0 }}{{ end }}
   {{- $category := false }}{{ with .GetTerms "categories" }}{{ $category = index . 0 }}{{ end }}
   <article class="post">
     <header class="post-header">
-      {{- with $category }}
-        <p><a class="pill" href="{{ .RelPermalink }}"><span class="visually-hidden">Category: </span>{{ .Title }}</a></p>
-      {{- end }}
+      {{- with $category }}<a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
       <h1>{{ .Title }}</h1>
-      {{- with .Description }}<p class="post-header__excerpt">{{ . }}</p>{{ end }}
-      {{ partial "post-meta.html" . }}
+      {{ partial "post-meta.html" (dict "page" . "avatar" true) }}
+      {{ partial "share.html" . }}
     </header>
 
     {{- with .Params.hero }}
-      <figure class="post-hero"{{ with .lqip }} style="background-image:url({{ . | safeURL }})"{{ end }}>
-        {{ partial "image.html" (dict "image" . "ratio" 1.7778 "sizes" "(min-width: 72rem) 72rem, 100vw" "eager" true) }}
-        {{- with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
-      </figure>
+      <div class="post-hero">
+        {{ partial "image.html" (dict "image" . "sizes" "(min-width: 72rem) 72rem, 100vw" "eager" true) }}
+      </div>
     {{- end }}
 
     <div class="post-layout">
-      <aside class="post-layout__aside" aria-label="Post tools">
+      <aside class="post-layout__aside">
         {{ partial "toc.html" . }}
-        {{ partial "share.html" . }}
       </aside>
-
       <div class="post-layout__content">
-        <div class="prose">
-          {{ .Content }}
-        </div>
+        <div class="prose">{{ .Content }}</div>
 
-        <footer class="post-footer">
-          {{- with $category }}
-            <p class="post-footer__filed">
-              Filed under <a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>
-            </p>
-          {{- end }}
-          {{- with $author }}
-            {{ partial "author-card.html" (dict "author" . "eyebrow" "Written by") }}
-          {{- end }}
-        </footer>
+        {{- if or $author $category }}
+          <footer class="post-footer">
+            {{- with $author }}
+              {{ partial "author-card.html" (dict "author" .) }}
+            {{- end }}
+            {{- with $category }}
+              <div class="category-box">
+                <h2 class="category-box__title">Category: <a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+                {{- with .Params.description }}<p>{{ . }}</p>{{ end }}
+              </div>
+            {{- end }}
+          </footer>
+        {{- end }}
       </div>
     </div>
   </article>
-
-  {{- /* More posts from the same category. */}}
-  {{- with $category }}
-    {{- $related := where .Pages "RelPermalink" "ne" $.RelPermalink }}
-    {{- with first 3 $related }}
-      <section class="related" aria-labelledby="related-title">
-        <div class="section__header">
-          <h2 class="section__title" id="related-title">More in {{ $category.Title }}</h2>
-          <a href="{{ $category.RelPermalink }}">View all<span class="visually-hidden"> {{ $category.Title }} posts</span> →</a>
-        </div>
-        <div class="card-grid">
-          {{- range . }}{{ partial "post-card.html" (dict "page" .) }}{{ end }}
-        </div>
-      </section>
-    {{- end }}
-  {{- end }}
 {{ end }}

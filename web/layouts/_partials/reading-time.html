@@ -1,5 +1,0 @@
-{{- /* Reading time from Hugo's word count (~212 words/minute); minimum 1 minute. */ -}}
-{{- with .WordCount }}
-  {{- $minutes := int (math.Max 1 $.ReadingTime) }}
-  <span class="meta__item">{{ $minutes }} min read</span>
-{{- end -}}

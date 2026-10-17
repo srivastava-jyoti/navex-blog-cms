@@ -1,23 +1,5 @@
-{{- /*
-  Share controls. Plain links work without JavaScript; main.js reveals the
-  copy-link button (Clipboard API) and the native share button (Web Share API).
-*/ -}}
-{{- $url := .Permalink -}}
-{{- $title := .Title -}}
-<section class="share" aria-labelledby="share-title" data-share data-url="{{ $url }}" data-title="{{ $title }}">
-  <h2 class="share__title" id="share-title">Share this post</h2>
-  <div class="share__actions">
-    <button type="button" class="button button--primary" data-share-copy hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>
-      Copy link
-    </button>
-    <button type="button" class="button" data-share-native hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/></svg>
-      Share…
-    </button>
-    <a class="button" href="https://www.linkedin.com/sharing/share-offsite/?url={{ $url | urlquery }}" target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
-    <a class="button" href="https://x.com/intent/post?url={{ $url | urlquery }}&amp;text={{ $title | urlquery }}" target="_blank" rel="noopener noreferrer">X<span class="visually-hidden"> (opens in a new tab)</span></a>
-    <a class="button" href="mailto:?subject={{ $title | urlquery }}&amp;body={{ $url | urlquery }}">Email</a>
-  </div>
-  <p class="share__status" role="status" aria-live="polite" data-share-status></p>
-</section>
+{{- /* Copy-link button. Hidden until main.js confirms copying is possible. */ -}}
+<div class="share" data-share data-url="{{ .Permalink }}">
+  <button type="button" class="button" data-share-copy hidden>Copy link</button>
+  <span class="share__status" role="status" aria-live="polite" data-share-status></span>
+</div>
