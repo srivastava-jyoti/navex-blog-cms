@@ -9,7 +9,7 @@
       <div class="post-hero__text">
         {{- with $category }}<a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
         <h1 id="post-title">{{ .Title }}</h1>
-        {{ partial "post-meta.html" (dict "page" . "avatar" true) }}
+        {{ partial "post-meta.html" (dict "page" . "showAvatar" true) }}
         {{ partial "share.html" . }}
       </div>
       {{- with .Params.hero }}

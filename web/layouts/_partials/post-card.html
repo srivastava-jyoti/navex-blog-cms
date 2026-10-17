@@ -13,6 +13,6 @@
     {{- end }}{{ end }}
     <h{{ $h }} class="post-card__title"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h{{ $h }}>
     {{- with $p.Description }}<p class="post-card__excerpt">{{ . }}</p>{{ end }}
-    {{ partial "post-meta.html" (dict "page" $p "avatar" false) }}
+    {{ partial "post-meta.html" (dict "page" $p "showAvatar" false) }}
   </div>
 </article>

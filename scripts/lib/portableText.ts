@@ -3,10 +3,10 @@
  *
  * Supports exactly what the Studio schema allows (studio/schemaTypes/objects/blockContent.ts):
  * h2–h4, blockquote, bullet/number lists (nested via `level`), strong, em, code,
- * strike-through, links, and inline images (delegated to `renderImage`).
+ * strike-through, links, and inline images (delegated to `renderCustom`).
  *
  * Output is plain Markdown so Hugo's native .TableOfContents, .ReadingTime and
- * heading anchors work without extra code.
+ * heading IDs work without extra code.
  */
 
 export interface Span {
@@ -75,7 +75,7 @@ function safeHref(href: string): string {
 const isSpan = (child: {_type: string}): child is Span => child._type === 'span'
 
 /** Render the inline children of a text block. */
-export function renderInline(block: TextBlock): string {
+function renderInline(block: TextBlock): string {
   const markDefs = new Map((block.markDefs ?? []).map((def) => [def._key, def]))
   const stack: string[] = []
   let out = ''

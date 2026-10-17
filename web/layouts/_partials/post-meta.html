@@ -1,9 +1,9 @@
-{{- /* Byline: author, publish date, reading time. Params: page, avatar (bool). */ -}}
+{{- /* Byline: author, publish date, reading time. Params: page, showAvatar (bool). */ -}}
 {{- $p := .page -}}
 <p class="meta">
   {{- with $p.GetTerms "authors" }}{{ with index . 0 }}
     <span class="meta__item">
-      {{- if $.avatar }}{{ partial "avatar.html" (dict "author" .) }}{{ end -}}
+      {{- if $.showAvatar }}{{ partial "avatar.html" (dict "author" .) }}{{ end -}}
       By <a href="{{ .RelPermalink }}">{{ .Title }}</a>
     </span>
   {{- end }}{{ end }}

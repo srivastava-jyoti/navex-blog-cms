@@ -41,7 +41,7 @@ const client = createClient({projectId, dataset, apiVersion, useCdn: false, pers
 // Queries
 // ---------------------------------------------------------------------------
 
-const IMAGE = `{
+const IMAGE_FIELDS = `{
   alt, hotspot,
   "url": asset->url,
   "width": asset->metadata.dimensions.width,
@@ -51,16 +51,16 @@ const IMAGE = `{
 const QUERY = `{
   "posts": *[_type == "post"] | order(publishedAt desc) {
     _id, _updatedAt, title, "slug": slug.current, excerpt, publishedAt,
-    heroImage ${IMAGE},
+    heroImage ${IMAGE_FIELDS},
     "category": category->{ "slug": slug.current, title },
     "author": author->{ "slug": slug.current, name },
     body[] {
       ...,
-      _type == "accessibleImage" => ${IMAGE}
+      _type == "accessibleImage" => ${IMAGE_FIELDS}
     }
   },
   "authors": *[_type == "author"] | order(name asc) {
-    _id, name, "slug": slug.current, bio, image ${IMAGE}
+    _id, name, "slug": slug.current, bio, image ${IMAGE_FIELDS}
   },
   "categories": *[_type == "category"] | order(title asc) {
     _id, title, "slug": slug.current, description
@@ -128,18 +128,18 @@ function imageData(image: SanityImage | null | undefined) {
   }
 }
 
-/** Hugo shortcode params use backtick raw strings, so strip backticks. */
-const raw = (value: string | number | undefined) => `\`${String(value ?? '').replace(/`/g, "'")}\``
+/** Format a Hugo shortcode parameter as a backtick raw string (backticks inside are replaced). */
+const shortcodeParam = (value: string | number | undefined) => `\`${String(value ?? '').replace(/`/g, "'")}\``
 
 function renderBodyImage(block: PortableTextBlock): string | null {
   if (block._type !== 'accessibleImage') return null
   const img = imageData(block as SanityImage)
   if (!img) return null
   const params = [
-    `src=${raw(img.url)}`,
-    `alt=${raw(img.alt)}`,
-    img.width && `width=${raw(img.width)}`,
-    img.height && `height=${raw(img.height)}`,
+    `src=${shortcodeParam(img.url)}`,
+    `alt=${shortcodeParam(img.alt)}`,
+    img.width && `width=${shortcodeParam(img.width)}`,
+    img.height && `height=${shortcodeParam(img.height)}`,
   ].filter(Boolean)
   return `{{< sanity-image ${params.join(' ')} >}}`
 }
@@ -197,7 +197,6 @@ async function main() {
       hero: imageData(post.heroImage),
       categories: post.category?.slug ? [post.category.slug] : undefined,
       authors: post.author?.slug ? [post.author.slug] : undefined,
-      sanityId: post._id,
     }
     await write(join(contentDir, 'posts', `${post.slug}.md`), contentFile(frontMatter, body))
     count.posts++

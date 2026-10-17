@@ -4,8 +4,10 @@
 const share = document.querySelector('[data-share]')
 const button = share?.querySelector('[data-share-copy]')
 const status = share?.querySelector('[data-share-status]')
+let clearStatusTimer
 
-async function copy(text) {
+/** Copy text to the clipboard. Returns true on success. */
+async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text)
     return true
@@ -14,17 +16,22 @@ async function copy(text) {
     const field = Object.assign(document.createElement('textarea'), {value: text})
     document.body.append(field)
     field.select()
-    const ok = document.execCommand('copy')
-    field.remove()
-    return ok
+    try {
+      return document.execCommand('copy')
+    } catch {
+      return false
+    } finally {
+      field.remove()
+    }
   }
 }
 
-if (button) {
+if (button && status) {
   button.hidden = false
   button.addEventListener('click', async () => {
-    const ok = await copy(share.dataset.url || window.location.href)
-    status.textContent = ok ? 'Link copied!' : 'Could not copy the link.'
-    setTimeout(() => (status.textContent = ''), 3000)
+    const copied = await copyToClipboard(share.dataset.url || window.location.href)
+    status.textContent = copied ? 'Link copied!' : 'Could not copy the link.'
+    clearTimeout(clearStatusTimer)
+    clearStatusTimer = setTimeout(() => (status.textContent = ''), 3000)
   })
 }
