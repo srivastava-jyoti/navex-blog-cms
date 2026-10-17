@@ -7,7 +7,7 @@ I used **Claude Code** (Anthropic, Claude Opus 5.5) as a coding assistant on thi
 - Planning the project structure and approach
 - Writing the Sanity schemas and validation rules
 - Writing the script that fetches content from Sanity for Hugo
-- Building the Hugo templates, Sass styles and JavaScript (table of contents, share button)
+- Building the Hugo templates, Sass styles and the copy-link button
 - Creating the sample posts, categories and authors
 - Finding and fixing bugs while testing in the browser
 - Drafting the README and this file

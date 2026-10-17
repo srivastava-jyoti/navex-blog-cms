@@ -55,7 +55,7 @@ web/       Hugo site: templates, Sass and JavaScript
 - Blog post page with title, publish date, hero image and content
 - Author and category details on each post, linking to their pages
 - Category and author listing pages (Hugo taxonomies)
-- Reading time, a table of contents, and a copy-link/share button
+- Reading time, a table of contents, and a copy-link button
 - Responsive layout for mobile and desktop, styled with Sass
 - Semantic HTML and accessibility basics (alt text, heading order, keyboard focus)
 - Validation in Sanity, and pages still render when optional fields are missing
@@ -69,10 +69,9 @@ web/       Hugo site: templates, Sass and JavaScript
 
 ## Sample content
 
-The repo includes 6 sample posts, 4 categories and 3 authors in `studio/seed/`. To load them into a Sanity project:
+The repo includes 6 sample posts, 4 categories and 3 authors in `studio/seed/seed.ndjson`. To load them into a Sanity project:
 
 ```bash
 cd studio
-npm run seed:build
 npm run seed:import
 ```
