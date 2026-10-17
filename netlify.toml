@@ -7,9 +7,8 @@
 [build.environment]
   NODE_VERSION = "22"
   HUGO_VERSION = "0.168.0"
-  # Public, read-only Sanity dataset: no token needed.
-  SANITY_PROJECT_ID = "9l9uv974"
-  SANITY_DATASET = "production"
+  # SANITY_PROJECT_ID and SANITY_DATASET are set in the Netlify UI
+  # (Site configuration → Environment variables). Locally they come from .env.
 
 # Deploy previews and branch deploys use their own URL.
 [context.deploy-preview]

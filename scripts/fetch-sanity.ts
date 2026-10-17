@@ -31,7 +31,10 @@ const dataset = process.env.SANITY_DATASET ?? 'production'
 const apiVersion = process.env.SANITY_API_VERSION ?? '2025-10-01'
 
 if (!projectId) {
-  console.error('✖ SANITY_PROJECT_ID is not set. Copy .env.example to .env and fill it in.')
+  console.error(
+    '✖ SANITY_PROJECT_ID is not set. Locally: copy .env.example to .env. ' +
+      'On Netlify: add it under Site configuration → Environment variables.',
+  )
   process.exit(1)
 }
 
