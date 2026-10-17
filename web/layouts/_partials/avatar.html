@@ -1,0 +1,12 @@
+{{- /* Author avatar. Params: author (term page), size ("", "lg", "xl"). Falls back to initials. */ -}}
+{{- $author := .author -}}
+{{- $mod := cond (ne (.size | default "") "") (printf " avatar--%s" .size) "" -}}
+{{- with $author.Params.image -}}
+  {{- $px := cond (eq $.size "xl") 224 (cond (eq $.size "lg") 160 96) -}}
+  <img class="avatar{{ $mod }}" src="{{ partial "functions/img-url.html" (dict "image" . "width" $px "height" $px) }}"
+    width="{{ $px }}" height="{{ $px }}" alt="" loading="lazy" decoding="async">
+{{- else -}}
+  {{- $initials := slice -}}
+  {{- range first 2 (split $author.Title " ") }}{{ $initials = $initials | append (substr . 0 1) }}{{ end -}}
+  <span class="avatar avatar--initials{{ $mod }}" aria-hidden="true">{{ delimit $initials "" | upper }}</span>
+{{- end -}}

@@ -1,0 +1,24 @@
+{{- /* Post summary card. Params: page, featured (bool), headingLevel (default 3). */ -}}
+{{- $p := .page -}}
+{{- $h := .headingLevel | default 3 -}}
+<article class="post-card{{ if .featured }} post-card--featured{{ end }}">
+  {{- with $p.Params.hero }}
+    <div class="post-card__media">
+      {{- partial "image.html" (dict "image" . "ratio" 1.7778 "sizes" (cond $.featured "(min-width: 48rem) 60vw, 100vw" "(min-width: 64rem) 33vw, (min-width: 36rem) 50vw, 100vw") "eager" $.featured) -}}
+    </div>
+  {{- end }}
+  <div class="post-card__body">
+    {{- with $p.GetTerms "categories" }}{{ with index . 0 }}
+      <a class="pill" href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- end }}{{ end }}
+    <h{{ $h }} class="post-card__title"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h{{ $h }}>
+    {{- with $p.Description }}<p class="post-card__excerpt">{{ . }}</p>{{ end }}
+    <div class="post-card__meta">
+      <div class="meta">
+        {{- with $p.GetTerms "authors" }}{{ with index . 0 }}<span class="meta__item">{{ .Title }}</span>{{ end }}{{ end }}
+        {{- if not $p.Date.IsZero }}<span class="meta__item"><time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date | time.Format ":date_medium" }}</time></span>{{ end }}
+        {{- partial "reading-time.html" $p -}}
+      </div>
+    </div>
+  </div>
+</article>

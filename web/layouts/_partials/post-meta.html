@@ -1,0 +1,17 @@
+{{- /* Byline: author, publish date, reading time. Context: a post page. */ -}}
+<div class="meta">
+  {{- with .GetTerms "authors" }}{{ with index . 0 }}
+    <span class="meta__item">
+      <a class="meta__author" href="{{ .RelPermalink }}">
+        {{- partial "avatar.html" (dict "author" .) -}}
+        <span><span class="visually-hidden">By </span>{{ .Title }}</span>
+      </a>
+    </span>
+  {{- end }}{{ end }}
+  {{- if not .Date.IsZero }}
+    <span class="meta__item">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+    </span>
+  {{- end }}
+  {{- partial "reading-time.html" . -}}
+</div>

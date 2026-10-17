@@ -1,0 +1,11 @@
+{{- /*
+  Builds a Sanity image CDN URL.
+  Params: image (map with url, focalX, focalY), width, height (optional → crop to ratio).
+  Docs: https://www.sanity.io/docs/image-urls
+*/ -}}
+{{- $img := .image -}}
+{{- $url := printf "%s?w=%d&auto=format&q=75" $img.url (int .width) -}}
+{{- with .height -}}
+  {{- $url = printf "%s&h=%d&fit=crop&crop=focalpoint&fp-x=%.3f&fp-y=%.3f" $url (int .) (float ($img.focalX | default 0.5)) (float ($img.focalY | default 0.5)) -}}
+{{- end -}}
+{{- return $url -}}

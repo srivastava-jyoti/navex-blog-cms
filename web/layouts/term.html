@@ -1,0 +1,31 @@
+{{ define "main" }}
+  {{- $isAuthor := eq .Data.Plural "authors" }}
+  <header class="term-header">
+    {{- if $isAuthor }}{{ partial "avatar.html" (dict "author" . "size" "xl") }}{{ end }}
+    <div>
+      <p class="term-header__eyebrow">{{ cond $isAuthor "Author" "Category" }}</p>
+      <h1>{{ .Title }}</h1>
+      {{- with (cond $isAuthor .Params.bio .Params.description) }}
+        <p class="term-header__description">{{ . }}</p>
+      {{- end }}
+    </div>
+  </header>
+
+  <section aria-labelledby="term-posts-title">
+    <div class="section__header">
+      <h2 class="section__title" id="term-posts-title">
+        {{- if $isAuthor }}Posts by {{ .Title }}{{ else }}Posts in {{ .Title }}{{ end }}
+      </h2>
+      <span class="muted">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "post" "posts" }}</span>
+    </div>
+    {{- $pager := .Paginate .Pages }}
+    {{- with $pager.Pages }}
+      <div class="card-grid">
+        {{- range . }}{{ partial "post-card.html" (dict "page" .) }}{{ end }}
+      </div>
+    {{- else }}
+      <p class="empty-state">No posts here yet.</p>
+    {{- end }}
+    {{ partial "pagination.html" $pager }}
+  </section>
+{{ end }}

@@ -6,8 +6,10 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     {{ partial "header.html" . }}
-    <main id="main" tabindex="-1">
-      {{ block "main" . }}{{ end }}
+    <main id="main" class="site-main" tabindex="-1">
+      <div class="container">
+        {{ block "main" . }}{{ end }}
+      </div>
     </main>
     {{ partial "footer.html" . }}
   </body>

@@ -1,8 +1,33 @@
 {{ define "main" }}
-  <h1>{{ site.Title }}</h1>
-  <ul>
-    {{ range where site.RegularPages "Section" "posts" }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-    {{ end }}
-  </ul>
+  {{- $posts := where site.RegularPages "Section" "posts" }}
+  <header class="page-intro">
+    <h1>{{ site.Title }}</h1>
+    <p>{{ site.Params.description }}</p>
+  </header>
+
+  {{- with site.Taxonomies.categories }}
+    <nav class="section" aria-label="Browse by category">
+      <ul class="pill-list" role="list">
+        {{- range .ByCount }}
+          <li><a class="pill" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <span aria-hidden="true">({{ .Count }})</span><span class="visually-hidden">, {{ .Count }} posts</span></a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  {{- end }}
+
+  <section class="section" aria-labelledby="latest-title">
+    <div class="section__header">
+      <h2 class="section__title" id="latest-title">Latest posts</h2>
+      {{- if gt (len $posts) 7 }}<a href="{{ "/posts/" | relURL }}">All posts →</a>{{ end }}
+    </div>
+    {{- with $posts }}
+      <div class="card-grid">
+        {{- range $i, $p := first 7 . }}
+          {{ partial "post-card.html" (dict "page" $p "featured" (eq $i 0)) }}
+        {{- end }}
+      </div>
+    {{- else }}
+      <p class="empty-state">No posts have been published yet.</p>
+    {{- end }}
+  </section>
 {{ end }}

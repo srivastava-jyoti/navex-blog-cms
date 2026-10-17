@@ -1,0 +1,27 @@
+{{ define "main" }}
+  {{- $isAuthors := eq .Data.Plural "authors" }}
+  <header class="page-intro">
+    <h1>{{ .Title }}</h1>
+    <p>{{ if $isAuthors }}The people writing for {{ site.Title }}.{{ else }}Browse posts by topic.{{ end }}</p>
+  </header>
+
+  {{- with .Data.Terms.Alphabetical }}
+    {{- if $isAuthors }}
+      <div class="author-grid">
+        {{- range . }}{{ partial "author-card.html" (dict "author" .Page) }}{{ end }}
+      </div>
+    {{- else }}
+      <ul class="category-list" role="list">
+        {{- range . }}
+          <li class="category-list__item">
+            <h2 class="category-list__title"><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a></h2>
+            {{- with .Page.Params.description }}<p class="muted">{{ . }}</p>{{ end }}
+            <p class="muted"><small>{{ .Count }} {{ cond (eq .Count 1) "post" "posts" }}</small></p>
+          </li>
+        {{- end }}
+      </ul>
+    {{- end }}
+  {{- else }}
+    <p class="empty-state">Nothing here yet.</p>
+  {{- end }}
+{{ end }}

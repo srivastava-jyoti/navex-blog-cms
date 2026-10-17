@@ -1,0 +1,9 @@
+{{- /* Table of contents (h2–h4). Open by default; main.js collapses it on small screens. */ -}}
+{{- if .Fragments.Headings }}
+  {{- with .TableOfContents }}{{ if in . "<li>" }}
+    <details class="toc" open data-toc>
+      <summary class="toc__summary"><h2 class="toc__title" id="toc-title">On this page</h2></summary>
+      {{ replace . "<nav id=\"TableOfContents\">" "<nav id=\"TableOfContents\" aria-labelledby=\"toc-title\">" | safeHTML }}
+    </details>
+  {{- end }}{{ end }}
+{{- end -}}

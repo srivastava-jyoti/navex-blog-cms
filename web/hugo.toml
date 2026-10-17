@@ -25,3 +25,6 @@ summaryLength = 30
 [build]
   [build.buildStats]
     enable = false
+
+[pagination]
+  pagerSize = 9

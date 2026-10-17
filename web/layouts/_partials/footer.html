@@ -1,3 +1,10 @@
 <footer class="site-footer">
-  <p>&copy; {{ now.Year }} {{ site.Title }}</p>
+  <div class="container site-footer__inner">
+    <p>&copy; {{ now.Year }} {{ site.Title }}. Content managed in Sanity, built with Hugo.</p>
+    <ul class="site-footer__links" role="list">
+      <li><a href="{{ "/posts/" | relURL }}">All posts</a></li>
+      <li><a href="{{ "/categories/" | relURL }}">Categories</a></li>
+      <li><a href="{{ "/authors/" | relURL }}">Authors</a></li>
+    </ul>
+  </div>
 </footer>

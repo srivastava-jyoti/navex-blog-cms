@@ -1,9 +1,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
-<meta name="description" content="{{ .Description | default site.Params.description }}">
+{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) }}
+{{- $description := .Description | default .Params.bio | default site.Params.description | plainify | truncate 160 }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
 <link rel="canonical" href="{{ .Permalink }}">
-{{ with resources.Get "scss/main.scss" }}
-  {{ $css := . | css.Sass (dict "transpiler" "dartsass" "outputStyle" "compressed") | fingerprint }}
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
-{{ end }}
+<meta name="color-scheme" content="light dark">
+
+{{- /* Open Graph / social preview */}}
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ .Title | default site.Title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+{{- with .Params.hero }}
+  <meta property="og:image" content="{{ partial "functions/img-url.html" (dict "image" . "width" 1200 "height" 630) }}">
+  {{- with .alt }}<meta property="og:image:alt" content="{{ . }}">{{ end }}
+  <meta name="twitter:card" content="summary_large_image">
+{{- end }}
+{{- if and .IsPage .Date }}
+  <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- end }}
+
+{{- with resources.Get "scss/main.scss" }}
+  {{- $opts := dict "transpiler" "dartsass" "targetPath" "css/main.css" "outputStyle" (cond hugo.IsProduction "compressed" "expanded") "enableSourceMap" (not hugo.IsProduction) }}
+  {{- $css := . | css.Sass $opts }}
+  {{- if hugo.IsProduction }}{{ $css = $css | fingerprint }}{{ end }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
+{{- end }}
+
+{{- with resources.Get "js/main.js" }}
+  {{- $js := . | js.Build (dict "targetPath" "js/main.js" "minify" hugo.IsProduction "target" "es2020") }}
+  {{- if hugo.IsProduction }}{{ $js = $js | fingerprint }}{{ end }}
+  <script src="{{ $js.RelPermalink }}" defer{{ if hugo.IsProduction }} integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
+{{- end }}

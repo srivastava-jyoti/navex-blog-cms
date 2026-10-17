@@ -1,0 +1,16 @@
+{{- /* Author details card. Params: author (term page), eyebrow (optional), headingLevel (default 2). */ -}}
+{{- $a := .author -}}
+{{- $h := .headingLevel | default 2 -}}
+{{- $id := printf "author-%s" (anchorize $a.Title) -}}
+<section class="author-card" aria-labelledby="{{ $id }}">
+  {{ partial "avatar.html" (dict "author" $a "size" "lg") }}
+  <div>
+    {{- with .eyebrow }}<p class="author-card__eyebrow">{{ . }}</p>{{ end }}
+    <h{{ $h }} class="author-card__name" id="{{ $id }}"><a href="{{ $a.RelPermalink }}">{{ $a.Title }}</a></h{{ $h }}>
+    {{- with $a.Params.bio }}<p class="author-card__bio">{{ . }}</p>{{ end }}
+    {{- $count := len $a.Pages }}
+    <a class="author-card__link" href="{{ $a.RelPermalink }}">
+      {{- if eq $count 1 }}View 1 post{{ else }}View all {{ $count }} posts{{ end }}<span class="visually-hidden"> by {{ $a.Title }}</span> →
+    </a>
+  </div>
+</section>
