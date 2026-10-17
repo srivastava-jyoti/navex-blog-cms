@@ -113,3 +113,13 @@
     color: $color-muted;
   }
 }
+
+.related {
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid $color-border;
+
+  &__title {
+    margin-bottom: 1.5rem;
+  }
+}

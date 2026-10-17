@@ -19,19 +19,32 @@
     <div class="post-body">
       <div class="prose">{{ .Content }}</div>
 
-        {{- if or $author $category }}
-          <footer class="post-footer">
-            {{- with $author }}
-              {{ partial "author-card.html" (dict "author" .) }}
-            {{- end }}
-            {{- with $category }}
-              <div class="category-box">
-                <h2 class="category-box__title">Category: <a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-                {{- with .Params.description }}<p>{{ . }}</p>{{ end }}
-              </div>
-            {{- end }}
-          </footer>
-        {{- end }}
+      {{- if or $author $category }}
+        <footer class="post-footer">
+          {{- with $author }}
+            {{ partial "author-card.html" (dict "author" .) }}
+          {{- end }}
+          {{- with $category }}
+            <div class="category-box">
+              <h2 class="category-box__title">Category: <a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+              {{- with .Params.description }}<p>{{ . }}</p>{{ end }}
+            </div>
+          {{- end }}
+        </footer>
+      {{- end }}
     </div>
   </article>
+
+  {{- /* You might like: posts from the same category first, then the newest other posts. */}}
+  {{- $others := where (where site.RegularPages "Section" "posts") "RelPermalink" "ne" .RelPermalink }}
+  {{- $sameCategory := slice }}
+  {{- with $category }}{{ $sameCategory = where .Pages "RelPermalink" "ne" $.RelPermalink }}{{ end }}
+  {{- with first 3 (union $sameCategory $others) }}
+    <section class="related" aria-labelledby="related-title">
+      <h2 class="related__title" id="related-title">You might like</h2>
+      <div class="card-grid">
+        {{- range . }}{{ partial "post-card.html" (dict "page" . "headingLevel" 3) }}{{ end }}
+      </div>
+    </section>
+  {{- end }}
 {{ end }}

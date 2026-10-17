@@ -56,6 +56,7 @@ web/       Hugo site: templates, Sass and JavaScript
 - Author and category details on each post, linking to their pages
 - Category and author listing pages (Hugo taxonomies)
 - Reading time and a copy-link button
+- "You might like" section with related posts (same category first)
 - Responsive layout for mobile and desktop, styled with Sass
 - Semantic HTML and accessibility basics (alt text, heading order, keyboard focus)
 - Validation in Sanity, and pages still render when optional fields are missing
