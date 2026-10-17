@@ -1,0 +1,105 @@
+@use '../abstracts' as *;
+
+.card-grid {
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+
+.post-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: $radius-md;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-2px);
+  }
+
+  &__media {
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface-muted);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding: var(--space-l);
+  }
+
+  &__title {
+    font-size: var(--step-1);
+
+    a {
+      color: var(--color-text);
+      text-decoration: none;
+
+      // Whole card is clickable via the title link (single tab stop).
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+      }
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  &__excerpt {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+  }
+
+  &__meta {
+    margin-top: auto;
+  }
+
+  // Keep the category pill clickable above the card overlay link.
+  .pill {
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+  }
+
+  &--featured {
+    @include from(md) {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+
+      .post-card__media {
+        aspect-ratio: auto;
+        min-height: 100%;
+      }
+
+      .post-card__body {
+        justify-content: center;
+        padding: var(--space-xl);
+      }
+
+      .post-card__title {
+        font-size: var(--step-3);
+      }
+
+      .post-card__excerpt {
+        font-size: var(--step-0);
+      }
+    }
+  }
+}

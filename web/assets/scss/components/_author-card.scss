@@ -1,0 +1,57 @@
+@use '../abstracts' as *;
+
+.author-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  padding: var(--space-l);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-md;
+  background: var(--color-surface);
+
+  @include from(sm) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__eyebrow {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__name {
+    margin-block: var(--space-2xs) var(--space-xs);
+    font-size: var(--step-1);
+
+    a {
+      color: var(--color-text);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  &__bio {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+  }
+
+  &__link {
+    display: inline-block;
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+    font-weight: 600;
+  }
+}
+
+// Grid of authors on /authors/.
+.author-grid {
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}

@@ -1,0 +1,101 @@
+@use '../abstracts' as *;
+
+.toc {
+  border: 1px solid var(--color-border);
+  border-radius: $radius-md;
+  background: var(--color-surface);
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-s) var(--space-m);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      content: '';
+      width: 0.55rem;
+      height: 0.55rem;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 0.2s;
+    }
+  }
+
+  &[open] &__summary::after {
+    transform: rotate(-135deg);
+  }
+
+  &__title {
+    font-family: var(--font-sans);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  nav {
+    padding: 0 var(--space-m) var(--space-m);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    ul {
+      padding-left: var(--space-m);
+    }
+  }
+
+  li {
+    margin-top: var(--space-2xs);
+  }
+
+  a {
+    display: block;
+    padding: var(--space-2xs) var(--space-xs);
+    border-left: 2px solid transparent;
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+    line-height: 1.4;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+
+    // Set by main.js while the section is in view.
+    &.is-active {
+      border-left-color: var(--color-accent);
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+  }
+
+  // Desktop: always expanded, summary acts as a heading.
+  @include from(lg) {
+    border: 0;
+    background: none;
+
+    &__summary {
+      padding-inline: 0;
+      cursor: default;
+      pointer-events: none;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    nav {
+      padding-inline: 0;
+    }
+  }
+}

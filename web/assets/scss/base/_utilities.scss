@@ -1,0 +1,31 @@
+@use '../abstracts' as *;
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  z-index: 100;
+  padding: var(--space-xs) var(--space-m);
+  border-radius: $radius-sm;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-weight: 600;
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: none;
+    color: var(--color-bg);
+  }
+}
+
+main:focus {
+  outline: none;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}

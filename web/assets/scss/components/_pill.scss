@@ -1,0 +1,24 @@
+@use '../abstracts' as *;
+
+.pill {
+  display: inline-block;
+  padding: 0.2em 0.75em;
+  border-radius: $radius-pill;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}

@@ -1,0 +1,27 @@
+.avatar {
+  flex: none;
+  width: var(--avatar-size, 2.5rem);
+  height: var(--avatar-size, 2.5rem);
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--color-surface-muted);
+
+  // Initials fallback when the author has no profile image.
+  &--initials {
+    display: grid;
+    place-items: center;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    font-weight: 700;
+    font-size: calc(var(--avatar-size, 2.5rem) * 0.38);
+    letter-spacing: 0.02em;
+  }
+
+  &--lg {
+    --avatar-size: 5rem;
+  }
+
+  &--xl {
+    --avatar-size: 7rem;
+  }
+}

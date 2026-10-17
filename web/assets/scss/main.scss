@@ -1,7 +1,5 @@
-// Entry point. Partials are added as the design is built out.
-body {
-  font-family: system-ui, sans-serif;
-  margin: 0 auto;
-  max-width: 70ch;
-  padding: 1rem;
-}
+// Entry point compiled by Hugo Pipes (css.Sass, Dart Sass).
+// Order: base → layout → components.
+@use 'base';
+@use 'layout';
+@use 'components';
