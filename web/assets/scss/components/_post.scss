@@ -105,22 +105,35 @@
     transform: rotate(45deg);
   }
 
+  // List hangs off a thin line under the arrow; sub-sections are indented.
   nav {
-    padding-bottom: 1rem;
+    padding: 0 0 1rem 0.2rem;
+  }
+
+  nav > ul {
+    border-left: 2px solid $color-border;
+    padding-left: 0.9rem;
   }
 
   ul {
     margin: 0;
-    padding-left: 1.25rem;
+    padding: 0;
     list-style: none;
+
+    ul {
+      margin-top: 0.3rem;
+      padding-left: 1rem;
+    }
   }
 
-  li {
-    margin-top: 0.35rem;
+  li + li {
+    margin-top: 0.3rem;
   }
 
   a {
-    color: $color-text;
+    color: $color-muted;
+    font-size: 0.95rem;
+    line-height: 1.4;
     text-decoration: none;
 
     &:hover {
