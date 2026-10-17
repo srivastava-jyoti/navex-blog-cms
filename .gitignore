@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Sanity
+studio/dist/
+studio/.sanity/
+
+# Hugo build output & generated content (produced by `npm run fetch`)
+web/public/
+web/resources/_gen/
+web/.hugo_build.lock
+web/content/posts/
+web/content/authors/
+web/content/categories/
+
+# OS / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+*.log
