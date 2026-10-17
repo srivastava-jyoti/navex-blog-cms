@@ -42,11 +42,10 @@ const client = createClient({projectId, dataset, apiVersion, useCdn: false, pers
 // ---------------------------------------------------------------------------
 
 const IMAGE = `{
-  alt, decorative, caption, hotspot,
+  alt, hotspot,
   "url": asset->url,
   "width": asset->metadata.dimensions.width,
-  "height": asset->metadata.dimensions.height,
-  "lqip": asset->metadata.lqip
+  "height": asset->metadata.dimensions.height
 }`
 
 const QUERY = `{
@@ -75,11 +74,8 @@ const QUERY = `{
 interface SanityImage {
   url?: string | null
   alt?: string | null
-  decorative?: boolean | null
-  caption?: string | null
   width?: number | null
   height?: number | null
-  lqip?: string | null
   hotspot?: {x: number; y: number} | null
 }
 
@@ -123,11 +119,9 @@ function imageData(image: SanityImage | null | undefined) {
   if (!image?.url) return undefined
   return {
     url: image.url,
-    alt: image.decorative ? '' : (image.alt ?? '').trim(),
-    caption: image.caption ?? undefined,
+    alt: (image.alt ?? '').trim(),
     width: image.width ?? undefined,
     height: image.height ?? undefined,
-    lqip: image.lqip ?? undefined,
     // Focal point for Sanity's image API (crop=focalpoint&fp-x=…&fp-y=…).
     focalX: image.hotspot?.x ?? 0.5,
     focalY: image.hotspot?.y ?? 0.5,
@@ -146,7 +140,6 @@ function renderBodyImage(block: PortableTextBlock): string | null {
     `alt=${raw(img.alt)}`,
     img.width && `width=${raw(img.width)}`,
     img.height && `height=${raw(img.height)}`,
-    img.caption && `caption=${raw(img.caption)}`,
   ].filter(Boolean)
   return `{{< sanity-image ${params.join(' ')} >}}`
 }

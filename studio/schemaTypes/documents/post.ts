@@ -1,31 +1,20 @@
-import {DocumentTextIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
 export const post = defineType({
   name: 'post',
   title: 'Blog post',
   type: 'document',
-  icon: DocumentTextIcon,
-  groups: [
-    {name: 'content', title: 'Content', default: true},
-    {name: 'meta', title: 'Meta'},
-  ],
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      group: 'content',
-      validation: (rule) => [
-        rule.required().min(5).max(120),
-        rule.max(70).warning('Titles over 70 characters may be truncated in search results.'),
-      ],
+      validation: (rule) => rule.required().min(5).max(120),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      group: 'meta',
       description: 'Used in the URL: /posts/<slug>/',
       options: {source: 'title', maxLength: 96},
       validation: (rule) => rule.required(),
@@ -35,7 +24,6 @@ export const post = defineType({
       title: 'Excerpt',
       type: 'text',
       rows: 3,
-      group: 'content',
       description: 'Shown on listing pages and used as the meta description.',
       validation: (rule) => rule.required().min(50).max(200),
     }),
@@ -43,21 +31,18 @@ export const post = defineType({
       name: 'heroImage',
       title: 'Hero image',
       type: 'accessibleImage',
-      group: 'content',
       validation: (rule) => rule.required().assetRequired(),
     }),
     defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
-      group: 'content',
       validation: (rule) => rule.required().min(1),
     }),
     defineField({
       name: 'publishedAt',
       title: 'Publish date',
       type: 'datetime',
-      group: 'meta',
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
     }),
@@ -66,7 +51,6 @@ export const post = defineType({
       title: 'Category',
       type: 'reference',
       to: [{type: 'category'}],
-      group: 'meta',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -74,16 +58,8 @@ export const post = defineType({
       title: 'Author',
       type: 'reference',
       to: [{type: 'author'}],
-      group: 'meta',
       validation: (rule) => rule.required(),
     }),
-  ],
-  orderings: [
-    {
-      title: 'Publish date, newest first',
-      name: 'publishedAtDesc',
-      by: [{field: 'publishedAt', direction: 'desc'}],
-    },
   ],
   preview: {
     select: {
