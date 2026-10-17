@@ -1,0 +1,31 @@
+{
+  "name": "navex-blog-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sanity Studio for the Navex Blog CMS",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "typecheck": "tsc --noEmit",
+    "seed:build": "node seed/build-seed.mjs",
+    "seed:import": "sanity dataset import seed/seed.ndjson production --replace"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "dependencies": {
+    "@sanity/icons": "5.2.3",
+    "@sanity/vision": "6.19.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sanity": "6.19.0",
+    "styled-components": "6.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}
