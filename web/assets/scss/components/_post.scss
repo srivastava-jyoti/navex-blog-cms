@@ -58,88 +58,78 @@
   }
 }
 
-// Article on the left, "Recent posts" sidebar on the right (stacked on mobile).
+// Mobile: Jump to section, article, Recent posts (source order).
+// Desktop: article on the left; Jump to section above Recent posts on the right.
 .post-layout {
   display: grid;
-  gap: 3rem;
+  gap: 2rem;
 
   @include from(lg) {
     grid-template-columns: minmax(0, 1fr) 18rem;
-    gap: 4rem;
+    grid-template-rows: auto 1fr;
+    gap: 1.5rem 4rem;
     align-items: start;
+
+    .prose {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .toc {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .sidebar {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    // Posts without headings have no panel: move Recent posts up.
+    &:not(:has(.toc)) .sidebar {
+      grid-row: 1;
+    }
   }
 }
 
-// Collapsible table of contents above the article (closed by default).
+// "Jump to section" panel (table of contents).
 .toc {
-  margin-bottom: 2rem;
-  border-block: 1px solid $color-border;
+  padding: 1.5rem;
+  border-radius: $radius;
+  background: $color-accent;
+  color: $color-surface;
 
-  &__toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-block: 0.75rem;
-    color: $color-accent;
-    font-weight: 600;
-    cursor: pointer;
-    list-style: none;
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    // Arrow that rotates when the list is open.
-    &::before {
-      content: '';
-      width: 0.45rem;
-      height: 0.45rem;
-      border-right: 2px solid currentColor;
-      border-bottom: 2px solid currentColor;
-      transform: rotate(-45deg);
-      transition: transform 0.15s;
-    }
-  }
-
-  &[open] &__toggle::before {
-    transform: rotate(45deg);
-  }
-
-  // List hangs off a thin line under the arrow; sub-sections are indented.
-  nav {
-    padding: 0 0 1rem 0.2rem;
-  }
-
-  nav > ul {
-    border-left: 2px solid $color-border;
-    padding-left: 0.9rem;
+  &__title {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 3px solid $color-accent-soft;
+    color: inherit;
+    font-size: 1.3rem;
   }
 
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
-
-    ul {
-      margin-top: 0.3rem;
-      padding-left: 1rem;
-    }
   }
 
   li + li {
-    margin-top: 0.3rem;
+    margin-top: 0.6rem;
   }
 
   a {
-    color: $color-muted;
-    font-size: 0.95rem;
+    color: inherit;
     line-height: 1.4;
     text-decoration: none;
 
     &:hover {
-      color: $color-accent;
       text-decoration: underline;
     }
+  }
+
+  :focus-visible {
+    outline-color: $color-surface;
   }
 }
 

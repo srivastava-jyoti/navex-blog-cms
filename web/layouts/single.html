@@ -21,11 +21,10 @@
 
     <div class="container page post__body">
       <div class="post-layout">
-        <div class="post-main">
-          {{ partial "toc.html" . }}
-          <div class="prose">
-            {{ .Content }}
-          </div>
+        {{ partial "toc.html" . }}
+
+        <div class="prose">
+          {{ .Content }}
         </div>
 
         {{- with first 5 $others }}

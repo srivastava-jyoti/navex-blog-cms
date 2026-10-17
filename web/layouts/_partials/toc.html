@@ -1,9 +1,7 @@
-{{- /* Collapsible table of contents built from the post's h2/h3 headings. Hidden when there are none. */ -}}
+{{- /* "Jump to section" panel: links to the post's h2 sections. Hidden when there are none. */ -}}
 {{- if .Fragments.Headings }}
-  <details class="toc">
-    <summary class="toc__toggle">Table of contents</summary>
-    <nav aria-label="Table of contents">
-      {{ .TableOfContents | replaceRE `<nav id="TableOfContents">\s*` "" | replaceRE `\s*</nav>\s*$` "" | safeHTML }}
-    </nav>
-  </details>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 class="toc__title" id="toc-title">Jump to section</h2>
+    {{ .TableOfContents | replaceRE `<nav id="TableOfContents">\s*` "" | replaceRE `\s*</nav>\s*$` "" | safeHTML }}
+  </nav>
 {{- end -}}
