@@ -55,8 +55,8 @@ web/       Hugo site: templates, Sass and JavaScript
 - Blog post page with title, publish date, hero image and content
 - Author and category shown on each post, linking to their pages
 - Category and author listing pages (Hugo taxonomies)
-- Reading time, a "Jump to section" table of contents and a copy-link button
-- Full-width hero (title beside image) and a "Recent posts" sidebar
+- Reading time, a table of contents ("In this article", sticky on desktop) and a copy-link button
+- Full-width hero with the title beside the image
 - "You might like" section with related posts (same category first)
 - Responsive layout for mobile and desktop, styled with Sass
 - Semantic HTML and accessibility basics (alt text, heading order, keyboard focus)

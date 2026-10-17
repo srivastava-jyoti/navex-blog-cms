@@ -58,41 +58,37 @@
   }
 }
 
-// Mobile: Jump to section, article, Recent posts (source order).
-// Desktop: article on the left; Jump to section above Recent posts on the right.
+// Mobile: "In this article" panel above the article.
+// Desktop: article on the left; the panel on the right, sticking while you scroll.
 .post-layout {
   display: grid;
   gap: 2rem;
 
   @include from(lg) {
     grid-template-columns: minmax(0, 1fr) 18rem;
-    grid-template-rows: auto 1fr;
-    gap: 1.5rem 4rem;
+    gap: 4rem;
     align-items: start;
 
     .prose {
       grid-column: 1;
-      grid-row: 1 / span 2;
+      grid-row: 1;
     }
 
     .toc {
+      position: sticky;
+      top: 1.5rem;
       grid-column: 2;
       grid-row: 1;
     }
 
-    .sidebar {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
-    // Posts without headings have no panel: move Recent posts up.
-    &:not(:has(.toc)) .sidebar {
-      grid-row: 1;
+    // Posts without headings have no panel: keep a comfortable text width.
+    &:not(:has(.toc)) {
+      grid-template-columns: minmax(0, 50rem);
     }
   }
 }
 
-// "Jump to section" panel (table of contents).
+// "In this article" panel (table of contents).
 .toc {
   padding: 1.5rem;
   border-radius: $radius;
@@ -130,42 +126,6 @@
 
   :focus-visible {
     outline-color: $color-surface;
-  }
-}
-
-.sidebar {
-  padding: 1.25rem;
-  border: 1px solid $color-border;
-  border-radius: $radius;
-  background: $color-surface;
-
-  &__title {
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-  }
-
-  &__list li + li {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid $color-border;
-  }
-
-  a {
-    display: block;
-    font-weight: 600;
-    line-height: 1.35;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  time {
-    display: block;
-    margin-top: 0.25rem;
-    color: $color-muted;
-    font-size: 0.85rem;
   }
 }
 

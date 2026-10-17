@@ -1,7 +1,7 @@
-{{- /* "Jump to section" panel: links to the post's h2 sections. Hidden when there are none. */ -}}
+{{- /* "In this article" panel: links to the post's h2 sections. Hidden when there are none. */ -}}
 {{- if .Fragments.Headings }}
   <nav class="toc" aria-labelledby="toc-title">
-    <h2 class="toc__title" id="toc-title">Jump to section</h2>
+    <h2 class="toc__title" id="toc-title">In this article</h2>
     {{ .TableOfContents | replaceRE `<nav id="TableOfContents">\s*` "" | replaceRE `\s*</nav>\s*$` "" | safeHTML }}
   </nav>
 {{- end -}}

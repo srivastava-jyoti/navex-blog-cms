@@ -26,20 +26,6 @@
         <div class="prose">
           {{ .Content }}
         </div>
-
-        {{- with first 5 $others }}
-          <aside class="sidebar" aria-labelledby="recent-title">
-            <h2 class="sidebar__title" id="recent-title">Recent posts</h2>
-            <ul class="sidebar__list" role="list">
-              {{- range . }}
-                <li>
-                  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                  {{- if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>{{ end }}
-                </li>
-              {{- end }}
-            </ul>
-          </aside>
-        {{- end }}
       </div>
     </div>
   </article>
