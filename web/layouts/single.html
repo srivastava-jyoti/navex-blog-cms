@@ -1,6 +1,5 @@
 {{ define "main" }}
-  {{- /* Author and category are optional: the page must render without them. */}}
-  {{- $author := false }}{{ with .GetTerms "authors" }}{{ $author = index . 0 }}{{ end }}
+  {{- /* Category is optional: the page must render without it. */}}
   {{- $category := false }}{{ with .GetTerms "categories" }}{{ $category = index . 0 }}{{ end }}
   <article class="post">
     <header class="post-header">
@@ -18,20 +17,6 @@
 
     <div class="post-body">
       <div class="prose">{{ .Content }}</div>
-
-      {{- if or $author $category }}
-        <footer class="post-footer">
-          {{- with $author }}
-            {{ partial "author-card.html" (dict "author" .) }}
-          {{- end }}
-          {{- with $category }}
-            <div class="category-box">
-              <h2 class="category-box__title">Category: <a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-              {{- with .Params.description }}<p>{{ . }}</p>{{ end }}
-            </div>
-          {{- end }}
-        </footer>
-      {{- end }}
     </div>
   </article>
 

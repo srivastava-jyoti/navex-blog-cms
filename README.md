@@ -53,7 +53,7 @@ web/       Hugo site: templates, Sass and JavaScript
 ## Features
 
 - Blog post page with title, publish date, hero image and content
-- Author and category details on each post, linking to their pages
+- Author and category shown on each post, linking to their pages
 - Category and author listing pages (Hugo taxonomies)
 - Reading time and a copy-link button
 - "You might like" section with related posts (same category first)
