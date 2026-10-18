@@ -3,7 +3,7 @@
 A simple blog CMS. Editors create **blog posts, categories and authors** in **Sanity Studio**, and **Hugo** renders them as a static website.
 
 - **Live site:** [https://capable-strudel-e37216.netlify.app/](https://capable-strudel-e37216.netlify.app/)
-- **Walkthrough video:** _coming soon (`video/`)_
+- **Walkthrough video:** [Watch on Google Drive](https://drive.google.com/file/d/1jsNzBqO9mVdBsLaCDOY8mWPCljw3twiM/view?usp=sharing)
 
 ## Tech stack
 
