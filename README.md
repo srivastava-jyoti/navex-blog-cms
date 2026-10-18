@@ -29,7 +29,7 @@ npm run dev
 
 Open http://localhost:1313
 
-The Sanity dataset is public, so no API token is needed. `.env.example` already contains the project ID.
+The Sanity dataset is public, so no API token is needed. `.env.example` already contains the required settings.
 
 ### Run Sanity Studio
 
@@ -89,10 +89,10 @@ The site is hosted on Netlify and deploys automatically on every push to `main`.
 
 The Sanity settings are not stored in the repo. Set them in Netlify under **Site configuration → Environment variables**:
 
-| Variable            | Value        |
-| ------------------- | ------------ |
-| `SANITY_PROJECT_ID` | `9l9uv974`   |
-| `SANITY_DATASET`    | `production` |
+| Variable            | Value                                         |
+| ------------------- | --------------------------------------------- |
+| `SANITY_PROJECT_ID` | Your Sanity project ID (from sanity.io/manage) |
+| `SANITY_DATASET`    | `production`                                  |
 
 ## Content model
 
